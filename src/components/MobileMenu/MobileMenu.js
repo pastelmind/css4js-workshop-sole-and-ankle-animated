@@ -9,6 +9,15 @@ import UnstyledButton from '../UnstyledButton';
 import Icon from '../Icon';
 import VisuallyHidden from '../VisuallyHidden';
 
+const NAV_LINKS = [
+  { href: '/sale', content: 'Sale'},
+  { href: '/new', content: 'New\xa0Releases'},
+  { href: '/men', content: 'Men'},
+  { href: '/women', content: 'Women'},
+  { href: '/kids', content: 'Kids'},
+  { href: '/collections', content: 'Collections'},
+];
+
 const MobileMenu = ({ isOpen, onDismiss }) => {
   return (
     <Overlay isOpen={isOpen} onDismiss={onDismiss}>
@@ -19,12 +28,11 @@ const MobileMenu = ({ isOpen, onDismiss }) => {
         </CloseButton>
         <Filler />
         <Nav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          {NAV_LINKS.map(({ href, content }, index) => (
+            <NavLink key={index} href={href} index={index}>
+              {content}
+            </NavLink>
+          ))}
         </Nav>
         <Footer>
           <SubLink href="/terms">Terms and Conditions</SubLink>
@@ -99,6 +107,7 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  animation: none;
 `;
 
 const NavLink = styled.a`
@@ -111,6 +120,9 @@ const NavLink = styled.a`
   &:first-of-type {
     color: var(--color-secondary);
   }
+
+  animation: ${fadeIn} ease backwards 300ms;
+  animation-delay: calc(250ms + ${props => (props.index || 0) * 25}ms);
 `;
 
 const Filler = styled.div`
